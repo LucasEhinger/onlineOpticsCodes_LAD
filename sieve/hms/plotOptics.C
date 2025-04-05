@@ -1,8 +1,7 @@
-void plotOptics(int nrun){
+void plotOptics(const std::string& runfile, int nrun) {
 
   //read the input file
-  TFile *f = new TFile(Form("/volatile/hallc/comm2017/holly/ROOTfiles/hms_replay_production_all_%i_400000.root",nrun));
-  //TFile *f = new TFile(Form("/volatile/hallc/comm2017/holly/ROOTfiles/hms_c_q8.root"));
+  TFile *f = new TFile(runfile.c_str());
   TTree *tt = (TTree*)f->Get("T");
 
   //here's the cut
@@ -17,13 +16,12 @@ void plotOptics(int nrun){
   canvas->SetBorderSize(0);
   canvas->SetFrameFillColor(0);
   canvas->SetFrameBorderMode(0);
-  std::string pdf_file_name= Form("output_plots_%i_sieve.pdf",nrun);
+  std::string pdf_file_name= Form("hms_output_plots_%i_sieve.pdf",nrun);
   gROOT->SetBatch(true);
   gStyle->SetOptStat(0);
   canvas->SetGridx();
   canvas->SetGridy();
-  TFile *fout = new TFile(Form("output_plots_%i_sieve.root",nrun),"RECREATE");
-
+  TFile *fout = new TFile(Form("hms_output_plots_%i_sieve.root",nrun),"RECREATE");
 
   //make plots
   TH1F *h_z = new TH1F("h_z",";H.react.z [cm]",100,-14,14);
